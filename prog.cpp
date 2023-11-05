@@ -4,7 +4,7 @@ using namespace std;
 //граничные условия
 //(x,y) из границы([0, 1] X [0,1])
 float g(float x, float y){
-	return x + y;
+	return x*y;
 }
 //функиця f
 //(x,y) из ([0, 1] X [0,1])
@@ -37,7 +37,7 @@ void solve(float * A, float * b, float * x, int size){
 			tmp[ind] = t;
 		}
 		for (int j = 0; j < size; j++){
-			if (j == tmp[i])
+			if (j == i)
 				continue;
 			float coef = A[j * size + tmp[i]] / A[i * size + tmp[i]];
 			b[j] -= b[i] * coef;
@@ -53,8 +53,8 @@ void solve(float * A, float * b, float * x, int size){
 }
 int main(int argc, char ** argv){
 	//размеры сетки
-	const int sizeX = 5;
-	const int sizeY = 5;
+	const int sizeX = 17;
+	const int sizeY = 17;
 	//матрица системы
 	float A[(sizeX * sizeY) * (sizeX * sizeY)] = {};
 	//правая часть
