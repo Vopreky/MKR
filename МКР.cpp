@@ -1,15 +1,16 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 //граничные условия
 //(x,y) из границы([0, 1] X [0,1])
 float g(float x, float y){
-	return x*y;
+	return cos(x)*sin(y);
 }
 //функиця f
 //(x,y) из ([0, 1] X [0,1])
 float f(float x, float y){
-	return 0;
+	return -2*cos(x)*sin(y);
 }
 void print(float * A, float * b, int size){
 	for (int i = 0; i < size; i++){
@@ -54,8 +55,8 @@ void solve(float * A, float * b, float * x, int size){
 int main(int argc, char ** argv){
 	const float d11 = 1, d12 = 0, d22 = 1;
 	//размеры сетки
-	const int sizeX = 17;
-	const int sizeY = 17;
+	const int sizeX = 25;
+	const int sizeY = 25;
 	//матрица системы
 	float A[(sizeX * sizeY) * (sizeX * sizeY)] = {};
 	//правая часть
@@ -101,7 +102,10 @@ int main(int argc, char ** argv){
 	print(A, b, sizeX * sizeY);
 	cout << endl << "ответ: " << endl;
 	solve(A, b, x, sizeX * sizeY);
+	float err = 0;
 	for (int i = 0; i < sizeX * sizeY; i++){
 		cout << "u[" << i / sizeY << ", " << i % sizeY << "] = u(" << i / sizeY * hx << ", " << i % sizeY * hy << ") = " << x[i] << endl;
+		err = max(err, abs(g(i / sizeY * hx, i % sizeY * hy) - x[i]));
 	}
+	cout << "error: " << err << endl;
 }
